@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
-const serverless = require('serverless-http')
 const mongoose = require('mongoose')
 const path = require('path')
 const ejsMate = require('ejs-mate')
@@ -143,7 +142,6 @@ app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/reviews', reviewRoutes)
 app.use('/', userRoutes)
 
-module.exports.handler = serverless(app);
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
