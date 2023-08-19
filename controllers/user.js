@@ -26,7 +26,7 @@ module.exports.renderLoginForm = (req, res) => {
 
 module.exports.login = async (req, res) => {
     req.flash('success', 'Welcome back')
-    const redirectUrl = res.locals.returnTo || '/campgrounds'
+    const redirectUrl = res.locals.returnTo || '/'
     res.redirect(redirectUrl)
 }
 
@@ -35,7 +35,7 @@ module.exports.logout = (req, res, next) => {
         req.logout(err => {
             if (err) return next(err)
             req.flash('success', "Goodbye!")
-            res.redirect('/campgrounds')
+            res.redirect('/')
         })
     } catch (e) {
         req.flash('error', e.message)

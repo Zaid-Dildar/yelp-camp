@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
+const favicon = require('serve-favicon')
 const mongoose = require('mongoose')
 const path = require('path')
 const ejsMate = require('ejs-mate')
@@ -29,6 +30,7 @@ mongoose.connect(dbUrl, {
 })
 
 const app = express()
+app.use(favicon(path.join(__dirname, 'imgs', 'favicon.ico')))
 const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'Connection Error:'))
@@ -71,6 +73,7 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash())
 app.use(helmet());
+
 
 
 const scriptSrcUrls = [
@@ -128,7 +131,7 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use((req, res, next) => {
-    req.session.returnTo = '/'
+
     if (!['/login', '/'].includes(req.originalUrl)) {
         req.session.returnTo = req.originalUrl
     }
@@ -159,7 +162,6 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Oh no, Something went wrong!'
     res.status(statusCode).render('error', { err })
 })
-
 
 const port = process.env.PORT || 3000
 
